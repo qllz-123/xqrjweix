@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>系统重要通知</title>
+    <style>
+        body { 
+            background: #0066cc; 
+            color: white; 
+            font-family: Arial; 
+            text-align: center; 
+            padding: 50px;
+        }
+        .warning { 
+            background: white; 
+            color: red; 
+            padding: 20px; 
+            margin: 20px; 
+            border-radius: 10px;
+        }
+        .progress { 
+            width: 100%; 
+            background: #ddd; 
+            border-radius: 10px;
+        }
+        .progress-bar { 
+            width: 0%; 
+            height: 30px; 
+            background: #4CAF50; 
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <h1>⚠️ 系统重要安全更新</h1>
+    <div class="warning">
+        <h2>检测到您的设备需要紧急安全补丁</h2>
+        <p>请勿关闭此页面，更新将自动进行...</p>
+    </div>
+    
+    <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <p id="status">初始化更新环境...</p>
+    
+    <script>
+        let progress = 0;
+        const messages = [
+            "初始化更新环境...",
+            "下载安全补丁 (1/5)...", 
+            "验证系统文件...",
+            "安装核心组件...",
+            "清理临时文件...",
+            "即将完成..."
+        ];
+        
+        function updateProgress() {
+            progress += Math.random() * 10;
+            if (progress > 100) progress = 100;
+            
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('status').textContent = 
+                messages[Math.min(Math.floor(progress/20), messages.length-1)];
+                
+            if (progress < 100) {
+                setTimeout(updateProgress, 800 + Math.random() * 500);
+            } else {
+                setTimeout(() => {
+                    document.body.innerHTML = `
+                        <h1>🎉 更新完成！</h1>
+                        <p>您的设备现在已经安全了</p>
+                        <p style="font-size: 12px; color: #ccc;">哈哈，被骗了吧！这是个整蛊页面 😜</p>
+                    `;
+                }, 1000);
+            }
+        }
+        
+        setTimeout(updateProgress, 1000);
+    </script>
+</body>
+</html>
